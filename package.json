@@ -3,11 +3,22 @@
   "version" : "0.0.3",
   "dependencies" : {
     "express" : "latest",
+    "cassandra-driver" : "latest",
+    "express-cassandra" : "latest",
     "morgan" : "latest",
     "compression" : "latest",
     "body-parser" : "latest",
     "method-override" : "latest",
     "ejs" : "latest",
-    "express-session" : "latest"
+    "express-session" : "latest",
+    "node-uuid" : "latest",
+    "passport" : "latest",
+    "passport-local" : "latest",
+    "connect-flash" : "latest",
+    "passport-facebook" : "latest",
+    "passport-google-oauth" : "latest",
+    "socket.io":"latest",
+    "cassandra-store": "latest",
+    "cookie-parser": "latest"
   }
 }
