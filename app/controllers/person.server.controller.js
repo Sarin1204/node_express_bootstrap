@@ -2,7 +2,8 @@
  * Created by sarin on 10/16/15.
  */
 
-var models = require('express-cassandra');
+var models = require('express-cassandra'),
+    bcrypt = require('bcrypt');
 
 exports.renderPerson = function(req,res){
 
@@ -61,21 +62,26 @@ exports.renderSignup = function(req, res, next) {
 exports.signup = function(req, res, next) {
     if (!req.user) {
         var Person = new models.instance.Person(req.body);
+        console.log('Person is '+JSON.stringify(Person));
         console.log(JSON.stringify(req.body));
         var message = null;
-
         Person.provider = 'local';
-
-        Person.save(function(err){
-            if(err) {
-                console.log('Error message in signup');
-                return res.redirect('/signup');
-            }
-            req.login(Person, function(err){
-                if (err) return next(err);
-                return res.redirect('/');
+        bcrypt.genSalt(10, function(err,salt){
+            bcrypt.hash(Person.password, salt, function(err, hash){
+                Person.password = hash;
+                Person.save(function(err){
+                    if(err) {
+                        console.log('Error message in signup');
+                        return res.redirect('/signup');
+                    }
+                    req.login(Person, function(err){
+                        if (err) return next(err);
+                        return res.redirect('/');
+                    });
+                });
             });
         });
+
     } else {
         return res.redirect('/');
     }

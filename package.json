@@ -19,6 +19,7 @@
     "passport-google-oauth" : "latest",
     "socket.io":"latest",
     "cassandra-store": "latest",
-    "cookie-parser": "latest"
+    "cookie-parser": "latest",
+    "bcrypt": "latest"
   }
 }

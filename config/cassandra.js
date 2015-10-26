@@ -5,7 +5,6 @@
 var models = require('express-cassandra');
 
 ///home/sarin/MEAN_BOOK/app
-console.log('some error')
 models.setDirectory("/home/sarin/MEAN_BOOK/app/models").bind(
     {
         clientOptions: {

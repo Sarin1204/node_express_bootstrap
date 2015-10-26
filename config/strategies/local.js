@@ -4,7 +4,8 @@
 
 var passport = require('passport'),
     LocalStrategy = require('passport-local').Strategy,
-    models = require('express-cassandra');
+    models = require('express-cassandra'),
+    bcrypt = require('bcrypt');
 
 module.exports = function() {
     passport.use(new LocalStrategy(function(username, password, done){
@@ -20,12 +21,22 @@ module.exports = function() {
                 message: 'Unknown user'
             });
         }
-        if (person.password !== password){
+
+        bcrypt.compare(password, person.password, function(err, res){
+            if (!res){
+                console.log('invalid password')
+                return done(null, false, {
+                    message: 'Invalid Password'
+                });
+            }
+        });
+
+        /*if (person.password !== password){
             console.log('invalid password')
             return done(null, false, {
                 message: 'Invalid Password'
             });
-        }
+        }*/
         return done(null, person);
         });
     }));
